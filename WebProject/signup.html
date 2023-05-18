@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="scripts/main.js"></script>
+    <script src="scripts/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <div class="maindiv">
+        <img src="Images/logo.png" alt="esta logo">
+        <h1>Sign up</h1>
+        <form id="loginform">
+            <label for="sname">Surname:</label><br>
+            <input type="text" id="sname" name="sname" required><br>
+            <label for="fname">Firstname:</label><br>
+            <input type="text" id="fname" name="fname" required><br><br>
+            <label for="uname">Username:</label><br>
+            <input type="text" id="uname" name="uname" required><br>
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" required><br>
+            <label for="pwd">Password</label><br>
+            <input type="password" id="pwd" name="pwd" required><br><br>
+            <button class="btn btn-primary" type="submit">Signup</button>
+        </form>
+        <a href="signin.html">already a student?</a>
+    </div>
+
+    <script>
+        var form = document.getElementById("loginform");
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            var data = new FormData(event.target);
+
+            var username = data.get("uname");
+            var password = data.get("pwd");
+            var email = data.get("email");
+            var surname = data.get("sname");
+            var firstname = data.get("fname");
+
+            let result = adduser(username, password, email, surname, firstname);
+            if(result == true){
+                window.location.href = "signin.html";
+            }
+        });
+    </script>
+    
+</body>
+
+</html>

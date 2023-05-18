@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="scripts/main.js"></script>
+    <script src="scripts/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <div class="maindiv form-signin w-100 m-auto">
+        <button class="btn btn-danger" onclick="logout()">log out</button>
+        <form id="reportform" class="form-floating p-5">
+            <img class="mb-4" src="Images/logo.png" alt="esta logo">
+            <h1>REPORT CARD</h1>
+            <h4>ESTA AGADIR</h4>
+
+            <table class="table table-hover table-borderless">
+                <tr>
+                    <td>Student Id:</td>
+                    <td id="sid">
+                </tr>
+                </tr>
+                <tr>
+                    <td>Student Name:</td>
+                    <td id="sname">
+                </tr>
+                </tr>
+            </table>
+            <table class="table table-hover">
+                <tr>
+                    <th>Subjects</th>
+                    <th>Grades</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Web Programming</td>
+                    <td><input class="form-control" type="number" id="wpg" name="wpg" required></td>
+                    <td><input class="form-control" type="text" id="wpn" name="wpn"></td>
+                </tr>
+                <tr>
+                    <td>Data Structure</td>
+                    <td><input class="form-control" type="number" id="dsg" name="dsg" required></td>
+                    <td><input class="form-control" type="text" id="dsn" name="dsn"></td>
+                </tr>
+                <tr>
+                    <td>Probability</td>
+                    <td><input class="form-control" type="number" id="pg" name="pg" required></td>
+                    <td><input class="form-control" type="text" id="pn" name="pn"></td>
+                </tr>
+                <tr>
+                    <td>Database</td>
+                    <td><input class="form-control" type="number" id="dg" name="dg" required></td>
+                    <td><input class="form-control" type="text" id="dn" name="dn"></td>
+                </tr>
+                <tr>
+                    <td>Networking</td>
+                    <td><input class="form-control" type="number" id="ng" name="ng" required></td>
+                    <td><input class="form-control" type="text" id="nn" name="nn"></td>
+                </tr>
+                <tr>
+                    <td>Operating Systems</td>
+                    <td><input class="form-control" type="number" id="osg" name="osg" required></td>
+                    <td><input class="form-control" type="text" id="osn" name="osn"></td>
+                </tr>
+                <tr>
+                    <td>System Information</td>
+                    <td><input class="form-control" type="number" id="sig" name="sig" required></td>
+                    <td><input class="form-control" type="text" id="sin" name="sin"></td>
+                </tr>
+                <tr>
+                    <td>Numerical Analysis</td>
+                    <td><input class="form-control" type="number" id="nag" name="nag" required></td>
+                    <td><input class="form-control" type="text" id="nan" name="nan"></td>
+                </tr>
+            </table>
+
+            <div style="display: flex; align-items: center;">
+                <p style="font-family: Urbanist;">Average</p>
+                <input class="form-control" type="text" id="ave" name="ave" readonly required>
+            </div>
+
+        </form>
+        <div class="mt-2" style="display: flex;">
+            <button class="w-100 btn btn-lg btn-primary" id="submitbtn" onclick="generatepdf()" >Generate pdf</button>
+            <button class="w-100 btn btn-lg btn-primary" onclick="opencalculator()"
+                id="calculatorbtn">Calculator</button>
+        </div>
+    </div>
+    <script>
+        var user = getconnecteduser();
+        if (user == null) {
+            window.location.href = "signin.html";
+        } else {
+            const sname = document.getElementById("sname").innerHTML = user[4] + " " + user[3];
+            const sid = document.getElementById("sid").innerHTML = user[5];
+        }
+
+        var form = document.getElementById("reportform");
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            var data = new FormData(event.target);
+
+            var user = getconnecteduser();
+            if (user != null) {
+                var grades =
+                    [
+                        ["Web Programming", data.get("wpg")],
+                        ["Data Structure", data.get("dsg")],
+                        ["Probability", data.get("pg")],
+                        ["Database", data.get("dg")],
+                        ["Networking", data.get("ng")],
+                        ["Operating Systems", data.get("osg")],
+                        ["System Information", data.get("sig")],
+                        ["Numerical Analysis", data.get("nag")]
+                    ];
+
+                var sum = 0;
+
+                grades.forEach(element => {
+                    sum += Number(element[1]);
+                    console.log(element);
+                });
+
+                const ave = sum / grades.length;
+
+                const averageinput = document.getElementById("ave");
+                averageinput.readOnly = false;
+                averageinput.value = ave;
+                averageinput.readOnly = true;
+
+                const element = document.getElementById('reportform');
+
+                var opt = {
+                    filename: 'reportcard.pdf'
+                };
+                html2pdf().set(opt).from(element).save();
+            } else {
+                window.location.href = "signin.html";
+            }
+        });
+
+        function opencalculator() {
+            window.location.href = "calculator.html";
+        }
+
+        function logout() {
+            disconnectuser();
+            window.location.href = "signin.html";
+        }
+    </script>
+</body>
+
+</html>

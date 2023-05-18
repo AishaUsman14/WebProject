@@ -1,0 +1,89 @@
+.maindiv {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh;
+}
+
+tr, th, h1, h4 {
+    font-family: 'Urbanist', sans-serif;
+}
+
+tr {
+    font-weight: 500;
+}
+
+th{
+    font-weight: 700;
+}
+
+h1{
+    font-weight: 900;
+}
+
+h4{
+    font-weight: 300;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(73, 73, 73);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 400px;
+    height: 564px;
+    margin-top: 120px;
+    border-radius: 20px;
+    font-family: Urbanist;
+}
+
+.buttons {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4, 82px);
+    font-family: Urbanist;
+}
+
+.functions button {
+    border: 0px;
+    width: 172px;
+    height: 81px;
+    font-size: 20px;
+    color: white;
+    font-family: Urbanist;
+}
+
+.functions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.function{
+    text-align: start;
+}
+
+.display p{
+    color: white;
+    font-size: 50px;
+    font-family: Urbanist;
+}
+
+.display {
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-end;
+    margin-right: 40px;
+
+}
